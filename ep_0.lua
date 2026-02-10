@@ -267,6 +267,28 @@ local DialogueData = {
 	}
 }
 
+-- [추가된 레이어] 상태 결정 로직
+function DialogueData.GetActualState(player, savedState)
+    -- 아이템 관련 상태 그룹인 경우에만 인벤토리 체크 실행
+    if string.find(savedState, "ST_ITEM_") then
+        local hasBait = InventoryService:HasItem(player, "Bungeoppang")
+        local hasTrap = InventoryService:HasItem(player, "CatTrap")
+        
+        if hasBait and hasTrap then
+            return "ST_ITEM_READY"
+        elseif hasBait then
+            return "ST_ITEM_ONLY_BAIT"
+        elseif hasTrap then
+            return "ST_ITEM_ONLY_TRAP"
+        else
+            return "ST_ITEM_NONE"
+        end
+    end
+    
+    -- 아이템 체크 단계가 아니면 저장된 상태 그대로 반환
+    return savedState
+end
+
 return DialogueData
 
 
