@@ -1,0 +1,9 @@
+*.bak
+*.lock
+*.rbxl.lock
+*.rbxlx.lock
+*.tmp
+*.log
+.DS_Store
+.vscode/
+.idea/
